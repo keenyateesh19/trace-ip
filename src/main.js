@@ -6,6 +6,34 @@ const locationDisplay = document.querySelector(".location > span");
 const timezoneDisplay = document.querySelector(".timezone > span");
 const ispDisplay = document.querySelector(".isp > span");
 
+function setMap(lat, lng) {
+    const container = L.DomUtil.get('map');
+  if (container != null) {
+    container._leaflet_id = null;
+  }
+  let map = L.map("map").setView(
+    [lat, lng],
+    17
+  );
+  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    maxZoom: 19,
+    attribution:
+      '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+  }).addTo(map);
+
+  if(lat !== 0 && lng !== 0) {
+    L.popup()
+    .setLatLng([lat, lng])
+    .setContent("The IP points to this location")
+    .openOn(map);
+  } else {
+    L.popup()
+    .setLatLng([lat, lng])
+    .setContent("This IP and Location is not found")
+    .openOn(map);
+  }
+}
+
 async function traceIp(validIp) {
   errorMsg.classList.contains("visible") &&
     errorMsg.classList.remove("visible");
@@ -15,30 +43,12 @@ async function traceIp(validIp) {
     }&ipAddress=${validIp || ""}`
   );
   const result = await response.json();
+  console.log(result)
   ipDisplay.textContent = result.ip;
   ispDisplay.textContent = result.isp || "Not Found";
-  locationDisplay.textContent =
-    `${result.location.city}, ${result.location.region} ${result.location.postalCode}` ||
-    "Not Found";
-  timezoneDisplay.textContent = `UTC ${result.location.timezone}`;
-  const container = L.DomUtil.get('map');
-  if (container != null) {
-    container._leaflet_id = null;
-  }
-  let map = L.map("map").setView(
-    [result.location.lat, result.location.lng],
-    17
-  );
-  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    maxZoom: 19,
-    attribution:
-      '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-  }).addTo(map);
-
-  L.popup()
-    .setLatLng([result.location.lat, result.location.lng])
-    .setContent("The IP points to this location")
-    .openOn(map);
+  locationDisplay.textContent = (result.location.lat === 0 && result.location.lng === 0) ? 'Not Found' : `${result.location.city}, ${result.location.region} ${result.location.postalCode || ''}`;
+  timezoneDisplay.textContent = result.location.timezone ? `UTC ${result.location.timezone}` : 'Not Found';
+  setMap(result.location.lat, result.location.lng);
 }
 
 form.addEventListener("submit", async (e) => {
