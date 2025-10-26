@@ -43,7 +43,6 @@ async function traceIp(validIp) {
     }&ipAddress=${validIp || ""}`
   );
   const result = await response.json();
-  console.log(result)
   ipDisplay.textContent = result.ip;
   ispDisplay.textContent = result.isp || "Not Found";
   locationDisplay.textContent = (result.location.lat === 0 && result.location.lng === 0) ? 'Not Found' : `${result.location.city}, ${result.location.region} ${result.location.postalCode || ''}`;
