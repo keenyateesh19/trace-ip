@@ -2,21 +2,13 @@
 
 A tool for tracing and analyzing IP addresses.
 
+## Screenshot
+
+![Project Screenshot](./screenshot.png)
+
 ## Description
 
-This project provides functionality to trace IP addresses and gather relevant network information.
-
-## Installation
-
-```bash
-npm install
-```
-
-## Usage
-
-```bash
-node index.js <ip-address>
-```
+This project provides functionality to trace IP addresses and the below mentioned information about the IP.
 
 ## Features
 
