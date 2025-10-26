@@ -15,13 +15,16 @@ async function traceIp(validIp) {
     }&ipAddress=${validIp || ""}`
   );
   const result = await response.json();
-  console.log(result);
   ipDisplay.textContent = result.ip;
   ispDisplay.textContent = result.isp || "Not Found";
   locationDisplay.textContent =
     `${result.location.city}, ${result.location.region} ${result.location.postalCode}` ||
     "Not Found";
   timezoneDisplay.textContent = `UTC ${result.location.timezone}`;
+  const container = L.DomUtil.get('map');
+  if (container != null) {
+    container._leaflet_id = null;
+  }
   let map = L.map("map").setView(
     [result.location.lat, result.location.lng],
     17
