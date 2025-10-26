@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="shortcut icon" href="/ip-address.png" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trace IP | IP Lookup & Geolocation</title>
+    <meta
+      name="description"
+      content="Trace IP addresses and get detailed geolocation information including country, city, ISP, and more. Fast and accurate IP lookup tool."
+    />
+    <link rel="stylesheet" href="/src/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+  </head>
+  <body>
+    <header>
+      <h1>Trace IP</h1>
+      <p class="subtitle">Track and locate any IP address with precision</p>
+      <form id="search-ip">
+        <div class="search-box">
+          <input
+            type="text"
+            name="ip"
+            id="ip"
+            placeholder="Search for any IPv4 or IPv6 address"
+            required
+            title="Please enter a valid IP address"
+          />
+          <button type="submit"><img src="/icon-arrow.svg" /></button>
+        </div>
+        <p class="error-msg">*Enter a valid IP address to trace its location.</p>
+      </form>
+      <section class="ip-info">
+        <div class="ip">
+          <h2>IP ADDRESS</h2>
+          <span>192.212.174.101</span>
+        </div>
+        <div class="location">
+          <h2>LOCATION</h2>
+          <span>Brooklyn, NY 10001</span>
+        </div>
+        <div class="timezone">
+          <h2>TIMEZONE</h2>
+          <span>UTC -05:00</span>
+        </div>
+        <div class="isp">
+          <h2>ISP</h2>
+          <span>SpaceX Starlink</span>
+        </div>
+        
+      </section>
+    </header>
+    <main>
+      <div id="map"></div>
+    </main>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

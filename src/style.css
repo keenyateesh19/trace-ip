@@ -1,0 +1,217 @@
+@import url("https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap");
+
+:root {
+  --col-wh: #fff;
+  --col-grey: hsl(0, 0%, 17%);
+  --col-lg-grey: hsl(0, 0%, 58%);
+}
+
+html {
+  font-size: 112%;
+  font-family: "Rubik", sans-serif;
+  color: var(--col-wh);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    interpolate-size: allow-keywords;
+  }
+}
+
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+p {
+  text-wrap: pretty;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-wrap: balance;
+}
+
+#root,
+#__next {
+  isolation: isolate;
+}
+
+header {
+  background-image: url("/pattern-bg-mobile.png");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  text-align: center;
+  height: 40vh;
+  padding: 1.5rem;
+}
+
+header > h1 {
+  font-weight: 500;
+}
+
+header > h1 + p {
+  color: gainsboro;
+  font-size: 0.85rem;
+}
+
+form#search-ip {
+  margin: auto;
+  margin-top: 1rem;
+}
+
+form#search-ip > .search-box {
+  background-color: var(--col-wh);
+  display: flex;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+form#search-ip > .search-box > input {
+  padding: 0.75rem 0 0.75rem 1.5rem;
+  flex: 1;
+  font-size: 0.8rem;
+}
+
+form#search-ip > .search-box:has(input:focus) {
+  outline: 1px solid var(--col-grey);
+}
+
+form#search-ip > .search-box > input,
+form#search-ip > .search-box > button {
+  outline: none;
+  border: none;
+}
+
+form#search-ip > .search-box > button {
+  background-color: var(--col-grey);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  padding: 1rem;
+}
+
+form#search-ip > .search-box > button:hover {
+  background-color: var(--col-lg-grey);
+}
+
+.search-box + p {
+  text-align: left;
+  color: red;
+  font-size: 0.7rem;
+  margin-top: 0.25rem;
+  font-weight: 700;
+  visibility: hidden;
+}
+
+.ip-info {
+  background-color: var(--col-wh);
+  border-radius: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+  margin-inline: auto;
+  filter: drop-shadow(0 10px 40px rgba(0, 0, 0, 0.15));
+  padding: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+  gap: 0.5rem;
+}
+
+.ip-info div {
+  padding: 0.5rem;
+  flex: 1;
+}
+
+.ip-info div h2 {
+  color: var(--col-lg-grey);
+  font-size: 0.65rem;
+}
+
+.ip-info div span {
+  color: var(--col-grey);
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  position: relative;
+  z-index: 0;
+}
+
+#map {
+  flex: 1;
+}
+
+.visible {
+  visibility: visible !important;
+}
+
+@media screen and (min-width: 42.11em) {
+  header {
+    background-image: url("/pattern-bg-desktop.png");
+  }
+
+  form#search-ip {
+    max-width: 40vw;
+  }
+
+  .ip-info {
+    gap: 1rem;
+    text-align: left;
+    max-width: 60vw;
+    align-items: stretch;
+  }
+
+  .ip-info div:last-child {
+    border-right: none;
+  }
+}
