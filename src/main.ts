@@ -1,12 +1,15 @@
-const ipInput = document.getElementById("ip");
-const form = document.getElementById("search-ip");
-const errorMsg = document.querySelector(".error-msg");
-const ipDisplay = document.querySelector(".ip > span");
-const locationDisplay = document.querySelector(".location > span");
-const timezoneDisplay = document.querySelector(".timezone > span");
-const ispDisplay = document.querySelector(".isp > span");
+declare const L: any;
 
-function setMap(lat, lng) {
+const ipInput = document.getElementById("ip") as HTMLInputElement;
+const form = document.getElementById("search-ip") as HTMLFormElement;
+const errorMsg: HTMLParagraphElement | null = document.querySelector(".error-msg");
+const ipDisplay: HTMLSpanElement | null = document.querySelector(".ip > span");
+const locationDisplay: HTMLSpanElement | null = document.querySelector(".location > span");
+const timezoneDisplay: HTMLSpanElement | null = document.querySelector(".timezone > span");
+const ispDisplay: HTMLSpanElement | null = document.querySelector(".isp > span");
+
+
+function setMap(lat: number, lng: number): void {
     const container = L.DomUtil.get('map');
   if (container != null) {
     container._leaflet_id = null;
@@ -34,19 +37,19 @@ function setMap(lat, lng) {
   }
 }
 
-async function traceIp(validIp) {
-  errorMsg.classList.contains("visible") &&
-    errorMsg.classList.remove("visible");
+async function traceIp(validIp: string = ""): Promise<void> {
+  errorMsg!.classList.contains("visible") &&
+    errorMsg!.classList.remove("visible");
   const response = await fetch(
     `https://geo.ipify.org/api/v2/country,city?apiKey=${
       import.meta.env.VITE_IPIFY_API
     }&ipAddress=${validIp || ""}`
   );
   const result = await response.json();
-  ipDisplay.textContent = result.ip;
-  ispDisplay.textContent = result.isp || "Not Found";
-  locationDisplay.textContent = (result.location.lat === 0 && result.location.lng === 0) ? 'Not Found' : `${result.location.city}, ${result.location.region} ${result.location.postalCode || ''}`;
-  timezoneDisplay.textContent = result.location.timezone ? `UTC ${result.location.timezone}` : 'Not Found';
+  ipDisplay!.textContent = result.ip;
+  ispDisplay!.textContent = result.isp || "Not Found";
+  locationDisplay!.textContent = (result.location.lat === 0 && result.location.lng === 0) ? 'Not Found' : `${result.location.city}, ${result.location.region} ${result.location.postalCode || ''}`;
+  timezoneDisplay!.textContent = result.location.timezone ? `UTC ${result.location.timezone}` : 'Not Found';
   setMap(result.location.lat, result.location.lng);
 }
 
@@ -60,8 +63,8 @@ form.addEventListener("submit", async (e) => {
   const ipv6Pattern =
     /^(([0-9a-fA-F]{1,4}:){7}([0-9a-fA-F]{1,4}|:)|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|(2[0-4][0-9]|[01]?[0-9][0-9]?))|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|(2[0-4][0-9]|[01]?[0-9][0-9]?)))))$/;
   ipv4Pattern.test(ipAddress) || ipv6Pattern.test(ipAddress)
-    ? traceIp(ipAddress)
-    : errorMsg.classList.add("visible");
+    ? await traceIp(ipAddress)
+    : errorMsg!.classList.add("visible");
 });
 
 traceIp();
